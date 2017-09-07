@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kosta.inhair.dao.mapper.UserMapper">
+
+	<insert id="userCreate" parameterType="User">
+		INSERT INTO user_ta(id, password, name, phonenum, email, mileage)
+	 	VALUES(#{id}, #{password}, #{name}, #{phonenum}, #{email}, #{mileage})
+	</insert>
+	
+	<select id="userSearch" parameterType="String" resultType="User">
+		SELECT id, password, name, phonenum, email, mileage
+		FROM user_ta 
+		WHERE id = #{id}
+	</select>
+	
+	<select id="idCheck" parameterType="String" resultType="User">
+		SELECT * FROM user_ta
+		WHERE id = #{id}
+	</select>
+	
+	<update id="updateUser" parameterType="User">
+		UPDATE user_ta
+		SET id=#{id}, password=#{password}, name=#{name}, phonenum=#{phonenum}, email=#{email}
+		WHERE id=#{id}
+	</update>
+	
+	<delete id="deleteUser" >
+		DELETE FROM user_ta
+		WHERE id=#{id}
+	</delete>
+	
+</mapper>

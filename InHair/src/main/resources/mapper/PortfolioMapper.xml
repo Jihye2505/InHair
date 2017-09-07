@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kosta.inhair.dao.mapper.PortfolioMapper">
+
+	<insert id="portfolioCreate" parameterType="Portfolio">
+		INSERT INTO
+		PORTFOLIO_TA(portfolio_id, title, content, img, designer_id)
+		VALUES
+		(portfolio_ta_seq.nextval, #{title}, #{content}, #{img},
+		#{designer_id})
+
+	</insert>
+
+	<update id="portfolioUpdate" parameterType="Portfolio">
+		UPDATE PORTFOLIO_TA
+		SET title = #{title}, content = #{content}, img = #{img} 
+		WHERE portfolio_id = #{portfolio_id}
+	</update>
+
+	<delete id="portfolioDelete" parameterType="int">
+
+		DELETE FROM
+		PORTFOLIO_TA
+		WHERE portfolio_id = #{portfolio_id}
+
+	</delete>
+
+	<select id="portfolioSearch" parameterType="int" resultType="Portfolio">
+
+		SELECT portfolio_id, title, content, img, designer_id
+		FROM PORTFOLIO_TA
+		WHERE portfolio_id = #{portfolio_id}
+
+	</select>
+
+	<select id="portfolioList" parameterType="String" resultType="Portfolio">
+
+		SELECT pf.portfolio_id, pf.title, pf.content, pf.img, pf.designer_id
+		FROM PORTFOLIO_TA pf 
+		INNER JOIN DESIGNER_TA d
+		ON pf.DESIGNER_ID = d.ID
+		WHERE d.SHOPCODE = #{shopCode}
+
+	</select>
+	
+	<select id="portfolioListByDesigner" parameterType="String" resultType="Portfolio">
+	SELECT portfolio_id, title, content, img, designer_id
+	FROM PORTFOLIO_TA
+	WHERE designer_id = #{designer_id}
+	
+	</select>
+	
+
+</mapper>

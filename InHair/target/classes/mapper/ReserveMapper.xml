@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kosta.inhair.dao.mapper.ReserveMapper">
+
+	<select id="reserveListByUser" parameterType="String"
+		resultType="Reserve">
+		SELECT reserve_id, shopName, designerName, days, time,
+		productName, leadtime, userName, userPhone, userId, shopCode, price
+		FROM reserve_ta WHERE userId = #{user_id}
+	</select>
+
+	<select id="reserveListByDesigner" parameterType="String"
+		resultType="Reserve">
+		SELECT reserve_id, shopName, designerName, days, time, productName,
+		leadtime, userName, userPhone, userId, shopCode, price
+		FROM reserve_ta
+		WHERE shopCode = #{shopCode}
+		AND designerName = #{designer_name}
+	</select>
+
+	<select id="reserveList" parameterType="String" resultType="Reserve">
+		SELECT reserve_id, shopName, designerName, days, time, productName,
+		leadtime, userName, userPhone, userId, shopCode, price
+		FROM reserve_ta WHERE shopCode = #{shopCode};
+	</select>
+
+	<insert id="createReserve" parameterType="Reserve">
+		INSERT INTO reserve_ta(reserve_id, shopName, designerName, days, time,
+		productName, leadtime, userName, userPhone, userId, shopCode, price)
+		VALUES (RESERVE_TA_SEQ.nextval, #{shopName}, #{designerName}, #{days},
+		#{time}, #{productName}, #{leadtime}, #{userName}, #{userPhone},
+		#{userId}, #{shopCode}, #{price})
+	</insert>
+
+	<insert id="adminCreateReserve" parameterType="Reserve">
+		INSERT INTO reserve_ta(reserve_id, shopName, designerName, days, time,
+		productName, leadtime, userName, userPhone, userId, shopCode, price)
+		VALUES (RESERVE_TA_SEQ.nextval, #{shopName}, #{designerName}, #{days},
+		#{time}, #{productName}, #{leadtime}, #{userName}, #{userPhone},
+		#{userId}, #{shopCode}, #{price})
+
+	</insert>
+	<delete id="deleteReserve" parameterType="Int">
+		DELETE FROM reserve_ta
+		WHERE reserve_id = #{reserve_id}
+	</delete>
+	
+	<select id="reserveDesignerSearchByName" parameterType="hashmap" resultType="Reserve">
+		SELECT reserve_id, shopName, designerName, days, time, productName,
+		leadtime, userName, userPhone, userId, shopCode, price
+		FROM reserve_ta
+		WHERE shopCode = #{shopCode}
+		AND designerName = #{designer_name}
+		AND substr(days, -2) = #{days}
+	</select>
+
+</mapper>

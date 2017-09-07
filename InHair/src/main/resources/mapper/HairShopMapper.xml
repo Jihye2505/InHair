@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kosta.inhair.dao.mapper.HairShopMapper">
+
+	<update id="hairshopCreate" parameterType="HairShop">
+		UPDATE hairshop_ta
+		SET code=#{code}, password=#{password}, tel=#{tel}, address=#{address}, shopName=#{shopName}, intro=#{intro}, img=#{img}, open=#{open}, close=#{close}
+		WHERE code = #{code}
+	</update>
+	
+	<select id="codeCheck" parameterType="String" resultType="HairShop">
+		SELECT * FROM hairshop_ta
+		WHERE code = #{code}
+		AND password is null	
+	</select>
+	
+	<select id="hairshopSearch" parameterType="String" resultType="HairShop">
+		SELECT code, password, tel, address, shopName, intro, img, open, close
+		FROM hairshop_ta
+		WHERE code = #{shopCode}
+	</select>
+	
+	<update id="hairshopUpdate" parameterType="HairShop">
+		UPDATE hairshop_ta
+		SET password=#{password}, tel=#{tel}, address=#{address}, shopName=#{shopName}, intro=#{intro}, img=#{img}, open=#{open}, close=#{close}
+		WHERE code = #{code}
+	</update>
+
+	<select id="hairshopList" resultType="HairShop">
+
+		SELECT code, password, tel, address, shopName, intro, img, open, close
+		FROM hairshop_ta
+	</select>
+		<select id="hairshopSearchByName" parameterType="String" resultType="HairShop">
+		SELECT code, password, tel, address, shopName, intro, img, open, close
+		FROM hairshop_ta
+		WHERE shopName like #{shopName} AND NOT code = '8282'
+	</select>
+		<select id="hairshopSearchByAddress" parameterType="String" resultType="HairShop">
+		SELECT code, password, tel, address, shopName, intro, img, open, close
+		FROM hairshop_ta
+		WHERE address like #{gu} AND NOT code = '8282'
+	</select>
+
+</mapper>

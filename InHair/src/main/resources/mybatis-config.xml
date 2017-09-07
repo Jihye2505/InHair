@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	
+	<typeAliases>
+		<typeAlias alias="Designer" type="com.kosta.inhair.domain.Designer" />
+		<typeAlias alias="HairShop" type="com.kosta.inhair.domain.HairShop" />
+		<typeAlias alias="Portfolio" type="com.kosta.inhair.domain.Portfolio" />
+		<typeAlias alias="Post" type="com.kosta.inhair.domain.Post" />
+		<typeAlias alias="Product" type="com.kosta.inhair.domain.Product" />
+		<typeAlias alias="Reserve" type="com.kosta.inhair.domain.Reserve" />
+		<typeAlias alias="User" type="com.kosta.inhair.domain.User" />
+ 	</typeAliases>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE" />
+				<property name="username" value="hr" />
+				<property name="password" value="hr" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper resource="mapper/DesignerMapper.xml"/>
+		<mapper resource="mapper/HairShopMapper.xml"/>
+		<mapper resource="mapper/PortfolioMapper.xml"/>
+		<mapper resource="mapper/PostMapper.xml"/>
+		<mapper resource="mapper/ProductMapper.xml"/>
+		<mapper resource="mapper/ReserveMapper.xml"/>
+		<mapper resource="mapper/UserMapper.xml"/>
+	</mappers>
+
+</configuration>

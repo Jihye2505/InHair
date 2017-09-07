@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kosta.inhair.dao.mapper.DesignerMapper">
+
+	<insert id="designerCreate" parameterType="Designer">
+		INSERT INTO
+		designer_ta(id, password, name, phonenum, email, intro, img,
+		starpoint, shopCode)
+		VALUES(#{id}, #{password}, #{name}, #{phonenum},
+		#{email}, #{intro}, #{img}, #{starpoint}, #{shopCode})
+	</insert>
+	
+	<select id="idDesignerCheck" parameterType="String" resultType="Designer">
+		SELECT * FROM designer_ta
+		WHERE id = #{id}
+	</select>
+
+	<select id="designerSearch" parameterType="String" resultType="Designer">
+		SELECT id, password, name, phonenum, email, intro, img, starpoint,
+		shopCode
+		FROM designer_ta
+		WHERE id = #{id}
+	</select>
+	
+	<select id="designerSearchByName" parameterType="hashmap" resultType="Designer">
+		SELECT d.id, d.password, d.name, d.phonenum, d.email, d.intro, d.img, d.starpoint,
+		d.shopCode
+		FROM designer_ta d
+		INNER JOIN reserve_ta r
+		ON d.name = r.designerName
+		WHERE r.shopCode = #{shopCode}
+		AND r.designerName = #{desinger_name}
+	</select>
+
+	<select id="designerListByHairshop" parameterType="String"
+		resultType="Designer">
+		SELECT id, password, name, phonenum, email, intro, img, starpoint, shopcode
+		FROM designer_ta
+		WHERE shopCode = #{shopCode}
+		ORDER BY starpoint DESC
+	</select>
+	
+	<select id="designerListByAddress" parameterType="String" resultType="Designer">
+		SELECT d.id, d.password, d.name, d.phonenum, d.email, d.intro, d.img, d.starpoint, d.SHOPCODE
+		FROM DESIGNER_TA d
+		INNER JOIN HAIRSHOP_TA hs
+		ON d.SHOPCODE = hs.code
+		WHERE hs.ADDRESS like #{gu}
+		ORDER BY starpoint DESC
+	</select>
+
+	<select id="designerList" resultType="Designer">
+		SELECT id, password, name, phonenum, email, intro, img, starpoint, shopcode
+		FROM designer_ta
+		ORDER BY starpoint DESC
+		
+	</select>
+	
+		<update id="updateDesigner" parameterType="Designer">
+		UPDATE designer_ta
+		SET password=#{password}, name=#{name}, phonenum=#{phonenum}, email=#{email}, starpoint=#{starpoint},
+		intro=#{intro}, img=#{img}, shopCode=#{shopCode}
+		WHERE id=#{id}
+	</update>
+	
+	<delete id="deleteDesigner" parameterType="String">
+		DELETE FROM designer_ta
+		WHERE id=#{id}
+	</delete>
+	
+	<update id="designerOut" parameterType="String">
+		UPDATE designer_ta
+		SET  shopCode = 8282
+		WHERE id=#{id}
+	</update>
+	
+	<select id="designerListByDate" parameterType="hashmap" resultType="Designer">
+		SELECT DISTINCT d.id, d.password, d.name, d.phonenum, d.email, d.intro, d.img, d.starpoint, d.shopCode
+		FROM designer_ta d
+		INNER JOIN reserve_ta r
+		ON d.name = r.designerName
+		WHERE r.shopCode = #{shopCode}
+		AND substr(r.days, -2) = #{days}
+	</select>
+	
+	<select id="shopCodeCheck" parameterType="String" resultType="HairShop">
+		SELECT * FROM hairshop_ta
+		WHERE code = #{code}
+		AND password is not null	
+	</select>
+
+
+</mapper>
